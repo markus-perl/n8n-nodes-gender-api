@@ -1,0 +1,19 @@
+{
+	"node": "@gender-api/n8n-nodes-gender-api.genderApi",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Marketing & Content", "Sales"],
+	"alias": ["gender", "first name", "name", "country of origin", "enrichment", "salutation"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://github.com/markus-perl/n8n-nodes-gender-api?tab=readme-ov-file#credentials"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://gender-api.com/en/api-docs/v2"
+			}
+		]
+	}
+}

@@ -1,0 +1,66 @@
+{
+	"name": "@gender-api/n8n-nodes-gender-api",
+	"version": "0.1.0",
+	"description": "Official n8n node for Gender-API.com: determine gender and country of origin from first names, full names and email addresses.",
+	"license": "MIT",
+	"homepage": "https://gender-api.com",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"gender-api",
+		"gender",
+		"first-name",
+		"country-of-origin",
+		"data-enrichment"
+	],
+	"author": {
+		"name": "Gender-API.com",
+		"email": "contact@gender-api.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/markus-perl/n8n-nodes-gender-api.git"
+	},
+	"bugs": {
+		"url": "https://github.com/markus-perl/n8n-nodes-gender-api/issues"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.tsbuildinfo"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/GenderApiComApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/GenderApi/GenderApi.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "0.56.4",
+		"eslint": "9.39.4",
+		"prettier": "3.8.3",
+		"release-it": "20.2.0",
+		"typescript": "5.9.3",
+		"vitest": "4.1.10"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
