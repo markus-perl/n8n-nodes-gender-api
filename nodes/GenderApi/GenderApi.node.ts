@@ -277,12 +277,46 @@ function buildLookupBody(
 	return body;
 }
 
+const LEADING_ANSWER_KEYS = ['gender', 'probability', 'country_of_origin'];
+const TRAILING_ANSWER_KEYS = ['input', 'details'];
+
+/**
+ * The API answers with `input` and `details` first, so n8n's Table view pushes the
+ * actual result (gender, probability, country_of_origin) off the right edge of the
+ * panel. Only the key order changes, no value does.
+ */
+function orderAnswer(answer: IDataObject): IDataObject {
+	const ordered: IDataObject = {};
+	const keys = Object.keys(answer);
+
+	for (const key of LEADING_ANSWER_KEYS) {
+		if (key in answer) {
+			ordered[key] = answer[key];
+		}
+	}
+
+	for (const key of keys) {
+		if (!LEADING_ANSWER_KEYS.includes(key) && !TRAILING_ANSWER_KEYS.includes(key)) {
+			ordered[key] = answer[key];
+		}
+	}
+
+	for (const key of TRAILING_ANSWER_KEYS) {
+		if (key in answer) {
+			ordered[key] = answer[key];
+		}
+	}
+
+	return ordered;
+}
+
 function toOutputItem(
 	this: IExecuteFunctions,
 	item: INodeExecutionData,
-	answer: IDataObject,
+	rawAnswer: IDataObject,
 	itemIndex: number,
 ): INodeExecutionData {
+	const answer = orderAnswer(rawAnswer);
 	const resultField = String(
 		this.getNodeParameter('options.resultField', itemIndex, '') ?? '',
 	).trim();

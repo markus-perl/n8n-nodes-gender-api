@@ -97,6 +97,25 @@ describe('gender lookups', () => {
 		expect(output).toEqual([{ json: genderAnswer('Sandra', 'female'), pairedItem: { item: 0 } }]);
 	});
 
+	it('puts gender and probability first and input/details last in the output', async () => {
+		const { context } = createContext({
+			parameters: { resource: 'gender', operation: 'getByFirstName', firstName: 'Sandra' },
+			responses: [{ statusCode: 200, body: genderAnswer('Sandra', 'female') }],
+		});
+
+		const [output] = await run(context);
+
+		expect(Object.keys(output[0].json)).toEqual([
+			'gender',
+			'probability',
+			'result_found',
+			'first_name',
+			'input',
+			'details',
+		]);
+		expect(output[0].json).toEqual(genderAnswer('Sandra', 'female'));
+	});
+
 	it('sends a full name to the full-name endpoint', async () => {
 		const { context, requests } = createContext({
 			parameters: { resource: 'gender', operation: 'getByFullName', fullName: 'Sandra Miller' },
@@ -160,6 +179,7 @@ describe('gender lookups', () => {
 		});
 		expect(output.map((item) => item.json.gender)).toEqual(['female', 'male', 'female']);
 		expect(output.map((item) => item.pairedItem)).toEqual([{ item: 0 }, { item: 1 }, { item: 2 }]);
+		expect(output.map((item) => Object.keys(item.json)[0])).toEqual(['gender', 'gender', 'gender']);
 	});
 
 	it('splits the items by the batch size option', async () => {
@@ -434,6 +454,16 @@ describe('country of origin', () => {
 			['POST', 'https://gender-api.com/v2/country-of-origin', { first_name: 'Mike' }],
 		]);
 		expect(output[0]).toEqual({ json: answer, pairedItem: { item: 0 } });
+		expect(Object.keys(output[0].json)).toEqual([
+			'gender',
+			'probability',
+			'country_of_origin',
+			'result_found',
+			'country_of_origin_map_url',
+			'first_name',
+			'input',
+			'details',
+		]);
 	});
 
 	it('sends a full name and an email address in their own fields', async () => {
