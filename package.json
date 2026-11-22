@@ -1,6 +1,6 @@
 {
 	"name": "@gender-api/n8n-nodes-gender-api",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Official n8n node for Gender-API.com: determine gender and country of origin from first names, full names and email addresses.",
 	"license": "MIT",
 	"homepage": "https://gender-api.com",
